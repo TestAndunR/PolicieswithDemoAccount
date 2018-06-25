@@ -76,6 +76,30 @@ exports.handler = function (event, context, callback) {
         // your logic (logging etc) to handle failures, should be here
         console.log(error);
     });
+    sqs.receiveMessage({
+        QueueUrl: 'https://sqs.us-east-1.amazonaws.com/318300609668/demoUser',
+        AttributeNames: ['All'],
+        MaxNumberOfMessages: '1',
+        VisibilityTimeout: '30',
+        WaitTimeSeconds: '0'
+    }).promise()
+        .then(receivedMsgData => {
+            if (!!(receivedMsgData) && !!(receivedMsgData.Messages)) {
+                let receivedMessages = receivedMsgData.Messages;
+                receivedMessages.forEach(message => {
+                    // your logic to access each message through out the loop. Each message is available under variable message 
+                    console.log(message)
+                    // within this block
+                });
+            } else {
+                // No messages to process
+                console.log("No messages")
+            }
+        })
+        .catch(err => {
+            // error handling goes here
+            console.log(err)
+        });
 
 
 
