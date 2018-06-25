@@ -3,7 +3,10 @@ const sns = new AWS.SNS();
 const s3 = new AWS.S3();
 const ddb = new AWS.DynamoDB.DocumentClient();
 
+
 exports.handler = function (event, context, callback) {
+    let name = event.name
+
     ddb.put({
         TableName: 'demoDDB',
         Item: { 'demoUser': name }
