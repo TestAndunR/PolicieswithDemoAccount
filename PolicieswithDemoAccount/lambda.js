@@ -102,24 +102,6 @@ exports.handler = function (event, context, callback) {
             console.log(err)
         });
 
-    cognito_idp.adminCreateUser({
-        UserPoolId: process.env.UserPoolId_cognitodemoUsers, /* required */
-        Username: "demouser1", /* required */
-        DesiredDeliveryMediums: ["SMS", "EMAIL"],//[SMS | EMAIL,/* more items */],
-        ForceAliasCreation: false,
-        MessageAction: "RESEND",
-        TemporaryPassword: "Adrt#2018",
-        UserAttributes: [],
-        ValidationData: []
-    }, function (error, data) {
-        if (error) {
-            // implement error handling logic here
-            throw error;
-            console.log(error)
-        }
-        // your logic goes within this block
-    });
-
 
 
     callback(null, 'Successfully executed');
