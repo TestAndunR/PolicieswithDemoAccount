@@ -1,6 +1,7 @@
 let AWS = require('aws-sdk');
 const kinesis = new AWS.Kinesis();
 let SL_AWS = require('slappforge-sdk-aws');
+const sqs = new SL_AWS.SQS(AWS);
 let connectionManager = require('./ConnectionManager');
 const sns = new AWS.SNS();
 const s3 = new AWS.S3();
@@ -63,6 +64,18 @@ exports.handler = function (event, context, callback) {
             // error handling goes here
             console.log(err)
         });
+    sqs.sendMessage({
+        MessageBody: 'Hello DemoUser',
+        QueueUrl: 'https://sqs.us-east-1.amazonaws.com/318300609668/demoUser',
+        DelaySeconds: '0',
+        MessageAttributes: {}
+    }, function (data) {
+        // your logic (logging etc) to handle successful message delivery, should be here
+        console.log(data);
+    }, function (error) {
+        // your logic (logging etc) to handle failures, should be here
+        console.log(error);
+    });
 
 
 
